@@ -1,0 +1,33 @@
+
+<ng-container *ngVar="(bitstreams$ | async) as bitstreams">
+  <div *ngIf="bitstreams?.length > 0">
+    <div *ngFor="let file of bitstreams; let index=index; let last=last;">
+
+<div  *ngIf="file?._links?.content?.href && index === 0  && accessStatus$ | async as accessStatus " class="page">
+  <ng2-pdfjs-viewer  *ngIf="accessStatus !== 'restricted' && src !== undefined "
+   [(pdfSrc)]="src"
+   [openFile]="false"
+   [zoom]="70"
+   [locale]="locale"
+   class="pdf-viewer"
+   id="mirador-viewer"
+   >
+  </ng2-pdfjs-viewer>
+  <div *ngIf="accessStatus === 'restricted' && (isAuthenticated$ | async) && srcRestricted !== undefined ">
+
+  <ng2-pdfjs-viewer
+  [pdfSrc]="decodeURL(srcRestricted)"
+  [openFile]="false"
+  [zoom]="70"
+  [locale]="locale"
+  class="pdf-viewer"
+  id="mirador-viewer"
+  >
+ </ng2-pdfjs-viewer>
+</div>
+</div>
+
+    </div>
+  </div>
+
+</ng-container>
